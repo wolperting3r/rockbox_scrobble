@@ -5,6 +5,8 @@ import csv
 import re
 from datetime import datetime, timedelta
 
+import numpy as np
+
 parent_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
@@ -12,7 +14,6 @@ if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
     os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
 
     filename = os.path.join(parent_path, 'scrobbler.log')
-    #os.system(f'cp /Volumes/IPOD/.scrobbler.log {filename}')
     #data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None)
     data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None, names = ['Interpret', 'Album', 'Trackname', 'Track Nr', 'Length', 'Listen/Skip', 'Timestamp', '8'])
     data = data.drop(['Track Nr', 'Listen/Skip', '8'], axis=1)
