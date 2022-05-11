@@ -20,6 +20,16 @@ if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
     # "{artist}", "{track}", "{album}", "{timestamp}", "{album artist}", "{duration}"
     data['Albumartist'] = data['Interpret']
     data = data.reindex(['Interpret', 'Trackname', 'Album', 'Timestamp', 'Albumartist', 'Length'], axis=1)
+
+    fix_timestamps = False
+    if fix_timestamps:
+        # Fix data with date from 2000
+        # Timestamp at which data starts
+        false_time = data['Timestamp'].min()
+        # Timestamp at which data should start
+        original_time = int((datetime.strptime("2022-05-07 14:25:25", "%Y-%m-%d %H:%M:%S")).timestamp())
+        data.loc[data['Timestamp'] < 1000000000, 'Timestamp'] = data[data['Timestamp'] < 1000000000]['Timestamp'] - false_time + original_time
+
     data['Timestamp'] = data['Timestamp'].apply(lambda x: (datetime.fromtimestamp(x) - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S'))
     data = data.astype(str)
     data = data.apply(lambda x: '"'+x+'"')
@@ -34,7 +44,6 @@ if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
         file_obj.write(content)
 
     os.system(f'open -a Sublime\ Text log.csv')
-    os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup2')
     os.system('rm /Volumes/IPOD/.scrobbler.log')
 else:
     print('iPod not found')
