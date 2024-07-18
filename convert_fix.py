@@ -9,11 +9,10 @@ import numpy as np
 
 parent_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
-# if True:
-    os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup')
-    os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
-    # os.system('cp /Users/zach/Downloads/scrobbler.log ./scrobbler.log')
+#if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
+if True:
+    #os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup')
+    #os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
 
     filename = os.path.join(parent_path, 'scrobbler.log')
     #data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None)
@@ -33,11 +32,11 @@ if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
         original_time = int((datetime.strptime("2023-02-03 08:40:00", "%Y-%m-%d %H:%M:%S")).timestamp())
         data.loc[data['Timestamp'] < 1000000000, 'Timestamp'] = data[data['Timestamp'] < 1000000000]['Timestamp'] - false_time + original_time
 
-    # print(data.loc[data['Timestamp'].isna()].to_string())
+    print(data.loc[data['Timestamp'].isna()].to_string())
     # Sommerzeit
-    data['Timestamp'] = data['Timestamp'].apply(lambda x: (datetime.fromtimestamp(x) - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S'))
+    data['Timestamp'] = data['Timestamp'].apply(lambda x: (datetime.fromtimestamp(x) - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S'))
     # Winterzeit
-    # data['Timestamp'] = data['Timestamp'].apply(lambda x: (datetime.fromtimestamp(x) - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S'))
+    # data['Timestamp'] = data['Timestamp'].apply(lambda x: datetime.fromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S'))
     data = data.astype(str)
     data = data.apply(lambda x: '"'+x+'"')
     filename = os.path.join(parent_path, 'log.csv')
