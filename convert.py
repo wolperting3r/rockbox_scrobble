@@ -17,7 +17,8 @@ if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
 
     filename = os.path.join(parent_path, 'scrobbler.log')
     #data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None)
-    data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None, names = ['Interpret', 'Album', 'Trackname', 'Track Nr', 'Length', 'Listen/Skip', 'Timestamp', '8'])
+    data = pd.read_csv(filename, sep='\t', skiprows=range(3), header=None, names = ['Interpret', 'Album', 'Trackname', 'Track Nr', 'Length', 'Listen/Skip', 'Timestamp', '8'], on_bad_lines='warn')
+    data = data.dropna(subset=['Timestamp', 'Length'])
     data = data.drop(['Track Nr', 'Listen/Skip', '8'], axis=1)
     # "{artist}", "{track}", "{album}", "{timestamp}", "{album artist}", "{duration}"
     data['Albumartist'] = data['Interpret']
