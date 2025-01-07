@@ -9,11 +9,15 @@ import numpy as np
 
 parent_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
+hostname = os.uname().machine
+# Execute only on mac, not on iPhone
+if hostname == 'arm64':
+    if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
+        os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup')
+        os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
+
 # if True:
-    # os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup')
-    # os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
-    # os.system('cp /Users/zach/Downloads/scrobbler.log ./scrobbler.log')
+if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
 
     filename = os.path.join(parent_path, '.scrobbler.log')
     filenameUTF = os.path.join(parent_path, '.scrobbler_utf8.log')
@@ -66,7 +70,10 @@ if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
     with open(filenameCSV, 'w') as file_obj:
         file_obj.write(content)
 
-    # os.system(f'open -a Sublime\ Text log.csv')
-    # os.system('rm /Volumes/IPOD/.scrobbler.log')
+    # Execute only on mac, not on iPhone
+    if hostname == 'arm64':
+        print("Execution on Mac, deleting .scrobbler.log on iPod"
+        os.system(f'open -a Sublime\ Text log.csv')
+        os.system('rm /Volumes/IPOD/.scrobbler.log')
 else:
     print('iPod not found')
