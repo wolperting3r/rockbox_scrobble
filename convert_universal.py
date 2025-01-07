@@ -13,8 +13,8 @@ hostname = os.uname().machine
 # Execute only on mac, not on iPhone
 if hostname == 'arm64':
     if os.path.isfile('/Volumes/IPOD/.scrobbler.log'):
-        os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log.backup')
-        os.system('cp /Volumes/IPOD/.scrobbler.log ./scrobbler.log')
+        os.system('cp /Volumes/IPOD/.scrobbler.log ./.scrobbler.log.backup')
+        os.system('cp /Volumes/IPOD/.scrobbler.log ./.scrobbler.log')
 
 # if True:
 if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
@@ -72,7 +72,7 @@ if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
 
     # Execute only on mac, not on iPhone
     if hostname == 'arm64':
-        print("Execution on Mac, deleting .scrobbler.log on iPod"
+        print("Execution on Mac, deleting .scrobbler.log on iPod")
         os.system(f'open -a Sublime\ Text log.csv')
         os.system('rm /Volumes/IPOD/.scrobbler.log')
 else:
