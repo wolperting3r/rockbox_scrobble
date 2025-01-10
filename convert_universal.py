@@ -75,5 +75,6 @@ if os.path.isfile(os.path.join(parent_path, '.scrobbler.log')):
         print("Execution on Mac, deleting .scrobbler.log on iPod")
         os.system(f'open -a Sublime\ Text log.csv')
         os.system('rm /Volumes/IPOD/.scrobbler.log')
+        os.system('diskutil eject $(diskutil info "IPOD" | grep Node | grep -oE "\/dev\/disk\d")')
 else:
     print('iPod not found')
